@@ -52,20 +52,6 @@ export function CalendarGrid({ year, month, selected, onSelect }: Props) {
         ))}
       </div>
       <div className="grid grid-cols-7 gap-1">
-        {/* spacer to remove the original block below — handled by replacing only header section */}
-        {weekDays.map((w, i) => (
-          <div
-            key={w}
-            className={cn(
-              "text-center text-xs font-semibold py-1",
-              i >= 5 ? "text-holiday" : "text-muted-foreground",
-            )}
-          >
-            {w}
-          </div>
-        ))}
-      </div>
-      <div className="grid grid-cols-7 gap-1">
         {cells.map((c, i) => {
           if (!c) return <div key={i} className="aspect-square" />;
           const dateKey = fmt(c.date);
