@@ -108,14 +108,13 @@ function Home() {
           onSelect={setSelected}
         />
 
-        {/* Holidays of the month — directly under the calendar, near appointments */}
+        <DayDetails date={selected} />
+
         <MonthHolidays
           year={cursor.getFullYear()}
           month={cursor.getMonth()}
           onSelectDate={onSelectFromList}
         />
-
-        <DayDetails date={selected} />
       </main>
 
       <div className="fixed bottom-0 left-0 right-0 z-20">
