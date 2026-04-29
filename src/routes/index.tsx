@@ -5,8 +5,8 @@ import { CalendarGrid } from "@/components/CalendarGrid";
 import { DayDetails } from "@/components/DayDetails";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { AdBanner } from "@/components/AdBanner";
-import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, CalendarDays } from "lucide-react";
+import { MonthHolidays } from "@/components/MonthHolidays";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { DATE_LOCALE } from "@/lib/i18n";
 
 export const Route = createFileRoute("/")({
@@ -23,8 +23,9 @@ function Home() {
   const [selected, setSelected] = useState(() => new Date());
 
   const monthLabel = new Intl.DateTimeFormat(DATE_LOCALE[lang], {
-    month: "long", year: "numeric",
+    month: "long",
   }).format(cursor);
+  const yearLabel = cursor.getFullYear();
 
   const prev = () => setCursor(new Date(cursor.getFullYear(), cursor.getMonth() - 1, 1));
   const next = () => setCursor(new Date(cursor.getFullYear(), cursor.getMonth() + 1, 1));
@@ -34,34 +35,70 @@ function Home() {
     setSelected(now);
   };
 
+  const onSelectFromList = (d: Date) => {
+    setCursor(new Date(d.getFullYear(), d.getMonth(), 1));
+    setSelected(d);
+  };
+
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-subtle">
-      <header className="sticky top-0 z-10 bg-card/95 backdrop-blur border-b border-border">
-        <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center text-primary-foreground shadow-soft">
-              <CalendarDays className="w-4 h-4" />
+    <div
+      className="min-h-screen flex flex-col"
+      style={{ background: "var(--gradient-hero)" }}
+    >
+      {/* Premium header with serif wordmark */}
+      <header className="sticky top-0 z-20 backdrop-blur-xl bg-background/70 border-b border-border/60">
+        <div className="max-w-2xl mx-auto px-5 py-3.5 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="relative w-9 h-9 rounded-xl bg-gradient-primary shadow-soft flex items-center justify-center overflow-hidden">
+              <span className="font-serif text-primary-foreground text-lg font-bold leading-none">
+                Ö
+              </span>
+              <span className="absolute inset-x-0 top-0 h-1/2 bg-white/15" />
             </div>
-            <h1 className="font-bold text-base">{t("appTitle")}</h1>
+            <div className="leading-tight">
+              <p className="text-[9px] tracking-[0.25em] uppercase text-muted-foreground font-semibold">
+                Austria · {yearLabel}
+              </p>
+              <h1 className="font-serif text-lg font-semibold text-foreground -mt-0.5">
+                {t("appTitle")}
+              </h1>
+            </div>
           </div>
           <LanguageSwitcher />
         </div>
       </header>
 
-      <main className="flex-1 max-w-2xl w-full mx-auto px-3 py-4 space-y-4 pb-24">
-        <div className="flex items-center justify-between bg-card rounded-2xl shadow-soft p-2">
-          <Button variant="ghost" size="icon" onClick={prev}>
+      <main className="flex-1 max-w-2xl w-full mx-auto px-4 py-5 space-y-5 pb-28">
+        {/* Month switcher — elevated */}
+        <div className="relative flex items-center justify-between rounded-2xl bg-card/80 backdrop-blur border border-border/60 px-2 py-2 shadow-soft">
+          <button
+            onClick={prev}
+            className="w-10 h-10 rounded-xl flex items-center justify-center hover:bg-accent active:scale-95 transition-all text-foreground/70 hover:text-foreground"
+            aria-label="Previous month"
+          >
             <ChevronLeft className="w-5 h-5" />
-          </Button>
+          </button>
           <button
             onClick={goToday}
-            className="font-semibold capitalize text-base hover:text-primary transition-colors"
+            className="flex flex-col items-center group"
           >
-            {monthLabel}
+            <span className="text-[9px] tracking-[0.25em] uppercase text-primary/70 font-semibold">
+              {t("monthly")}
+            </span>
+            <span className="font-serif text-2xl font-semibold capitalize text-foreground group-hover:text-primary transition-colors leading-tight">
+              {monthLabel}
+            </span>
+            <span className="text-[10px] tabular-nums text-muted-foreground tracking-wider">
+              {yearLabel}
+            </span>
           </button>
-          <Button variant="ghost" size="icon" onClick={next}>
+          <button
+            onClick={next}
+            className="w-10 h-10 rounded-xl flex items-center justify-center hover:bg-accent active:scale-95 transition-all text-foreground/70 hover:text-foreground"
+            aria-label="Next month"
+          >
             <ChevronRight className="w-5 h-5" />
-          </Button>
+          </button>
         </div>
 
         <CalendarGrid
@@ -71,10 +108,17 @@ function Home() {
           onSelect={setSelected}
         />
 
+        {/* Holidays of the month — directly under the calendar, near appointments */}
+        <MonthHolidays
+          year={cursor.getFullYear()}
+          month={cursor.getMonth()}
+          onSelectDate={onSelectFromList}
+        />
+
         <DayDetails date={selected} />
       </main>
 
-      <div className="fixed bottom-0 left-0 right-0 z-10">
+      <div className="fixed bottom-0 left-0 right-0 z-20">
         <AdBanner />
       </div>
     </div>

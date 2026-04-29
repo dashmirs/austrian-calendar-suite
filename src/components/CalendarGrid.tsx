@@ -37,14 +37,14 @@ export function CalendarGrid({ year, month, selected, onSelect }: Props) {
     a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
 
   return (
-    <div className="bg-card rounded-2xl shadow-soft p-3">
-      <div className="grid grid-cols-7 gap-1 mb-2">
+    <div className="bg-card/90 backdrop-blur rounded-3xl border border-border/60 shadow-elegant p-4">
+      <div className="grid grid-cols-7 gap-1 mb-2 pb-2 border-b border-border/40">
         {weekDays.map((w, i) => (
           <div
             key={w}
             className={cn(
-              "text-center text-xs font-semibold py-1",
-              i >= 5 ? "text-holiday" : "text-muted-foreground",
+              "text-center text-[10px] font-bold tracking-[0.15em] uppercase py-1.5",
+              i >= 5 ? "text-holiday/80" : "text-muted-foreground/70",
             )}
           >
             {w}
