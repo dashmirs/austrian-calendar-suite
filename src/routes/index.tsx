@@ -22,6 +22,9 @@ function Home() {
   const { t, lang } = useApp();
   const [cursor, setCursor] = useState(() => new Date());
   const [selected, setSelected] = useState(() => new Date());
+  const [addOpen, setAddOpen] = useState(false);
+
+  const selectedKey = `${selected.getFullYear()}-${String(selected.getMonth() + 1).padStart(2, "0")}-${String(selected.getDate()).padStart(2, "0")}`;
 
   const monthLabel = new Intl.DateTimeFormat(DATE_LOCALE[lang], {
     month: "long",
