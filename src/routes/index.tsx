@@ -6,8 +6,9 @@ import { DayDetails } from "@/components/DayDetails";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { AdBanner } from "@/components/AdBanner";
 import { MonthHolidays } from "@/components/MonthHolidays";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
 import { DATE_LOCALE } from "@/lib/i18n";
+import { AppointmentDialog } from "@/components/AppointmentDialog";
 
 export const Route = createFileRoute("/")({
   component: () => (
