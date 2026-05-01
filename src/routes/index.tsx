@@ -6,8 +6,9 @@ import { DayDetails } from "@/components/DayDetails";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { AdBanner } from "@/components/AdBanner";
 import { MonthHolidays } from "@/components/MonthHolidays";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
 import { DATE_LOCALE } from "@/lib/i18n";
+import { AppointmentDialog } from "@/components/AppointmentDialog";
 
 export const Route = createFileRoute("/")({
   component: () => (
@@ -21,6 +22,9 @@ function Home() {
   const { t, lang } = useApp();
   const [cursor, setCursor] = useState(() => new Date());
   const [selected, setSelected] = useState(() => new Date());
+  const [addOpen, setAddOpen] = useState(false);
+
+  const selectedKey = `${selected.getFullYear()}-${String(selected.getMonth() + 1).padStart(2, "0")}-${String(selected.getDate()).padStart(2, "0")}`;
 
   const monthLabel = new Intl.DateTimeFormat(DATE_LOCALE[lang], {
     month: "long",
@@ -116,6 +120,22 @@ function Home() {
           onSelectDate={onSelectFromList}
         />
       </main>
+
+      {/* Floating premium FAB — sits above the ad banner */}
+      <button
+        onClick={() => setAddOpen(true)}
+        aria-label={t("newAppointment")}
+        className="fixed right-5 bottom-24 z-30 group"
+      >
+        <span className="absolute inset-0 rounded-full bg-primary/30 blur-xl scale-110 group-hover:scale-125 transition-transform" />
+        <span className="absolute -inset-1 rounded-full bg-gradient-to-br from-gold/40 via-primary/40 to-primary-glow/40 blur-md opacity-70 group-hover:opacity-100 transition-opacity" />
+        <span className="relative flex items-center justify-center w-16 h-16 rounded-full bg-gradient-primary text-primary-foreground shadow-premium ring-1 ring-white/20 group-hover:scale-105 group-active:scale-95 transition-transform">
+          <span className="absolute inset-x-2 top-1.5 h-1/3 rounded-full bg-white/20 blur-[2px]" />
+          <Plus className="w-7 h-7 relative" strokeWidth={2.75} />
+        </span>
+      </button>
+
+      <AppointmentDialog open={addOpen} onOpenChange={setAddOpen} defaultDate={selectedKey} />
 
       <div className="fixed bottom-0 left-0 right-0 z-20">
         <AdBanner />
