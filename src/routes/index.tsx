@@ -75,8 +75,10 @@ function Home() {
               <h1 className="font-serif text-lg font-semibold text-foreground -mt-0.5">
                 {t("appTitle")}
               </h1>
-              <p className="text-[8px] tracking-[0.3em] uppercase font-semibold mt-0.5 bg-gradient-primary bg-clip-text text-transparent">
-                Erstellt von DS Interactive
+              <p className="text-[10px] font-serif italic mt-1 tracking-wide">
+                <span className="bg-gradient-to-r from-primary via-gold to-primary-glow bg-clip-text text-transparent font-semibold">
+                  Erstellt von DS Interactive
+                </span>
               </p>
             </div>
           </div>
