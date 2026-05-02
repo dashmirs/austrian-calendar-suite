@@ -53,19 +53,31 @@ function Home() {
       <header className="sticky top-0 z-20 backdrop-blur-xl bg-background/70 border-b border-border/60">
         <div className="max-w-2xl mx-auto px-5 py-3.5 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="relative w-9 h-9 rounded-xl bg-gradient-primary shadow-soft flex items-center justify-center overflow-hidden">
-              <span className="font-serif text-primary-foreground text-lg font-bold leading-none">
-                Ö
-              </span>
-              <span className="absolute inset-x-0 top-0 h-1/2 bg-white/15" />
+            {/* Austrian flag — premium circular badge */}
+            <div
+              className="relative w-10 h-10 rounded-full shadow-elegant ring-1 ring-border/60 overflow-hidden"
+              aria-label="Österreich"
+              title="Österreich"
+            >
+              <div className="absolute inset-0 flex flex-col">
+                <div className="h-1/3" style={{ background: "oklch(0.55 0.22 27)" }} />
+                <div className="h-1/3 bg-white" />
+                <div className="h-1/3" style={{ background: "oklch(0.55 0.22 27)" }} />
+              </div>
+              {/* Glossy highlight */}
+              <span className="absolute inset-0 rounded-full bg-gradient-to-b from-white/40 via-transparent to-black/15 pointer-events-none" />
+              <span className="absolute inset-0 rounded-full ring-1 ring-inset ring-white/30 pointer-events-none" />
             </div>
             <div className="leading-tight">
               <p className="text-[9px] tracking-[0.25em] uppercase text-muted-foreground font-semibold">
-                Austria · {yearLabel}
+                Österreich · {yearLabel}
               </p>
               <h1 className="font-serif text-lg font-semibold text-foreground -mt-0.5">
                 {t("appTitle")}
               </h1>
+              <p className="text-[8px] tracking-[0.3em] uppercase font-semibold mt-0.5 bg-gradient-primary bg-clip-text text-transparent">
+                Erstellt von DS Interactive
+              </p>
             </div>
           </div>
           <LanguageSwitcher />
