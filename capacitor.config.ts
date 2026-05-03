@@ -3,7 +3,9 @@ import type { CapacitorConfig } from "@capacitor/cli";
 const config: CapacitorConfig = {
   appId: "at.lovable.kalender",
   appName: "Österreichischer Kalender",
-  webDir: "dist",
+  // TanStack Start e nxjerr aplikacionin statik te dist/client.
+  // Kjo e bën APK-në ta hapë app-in lokalisht, jo ekran bosh.
+  webDir: "dist/client",
   // NOTE: Live-reload nga Lovable preview është çaktivizuar.
   // Për zhvillim me live-reload, hiq komentet më poshtë:
   // server: {
