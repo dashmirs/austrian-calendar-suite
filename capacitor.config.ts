@@ -3,15 +3,16 @@ import type { CapacitorConfig } from "@capacitor/cli";
 const config: CapacitorConfig = {
   appId: "at.lovable.kalender",
   appName: "Österreichischer Kalender",
-  // TanStack Start e nxjerr aplikacionin statik te dist/client.
-  // Kjo e bën APK-në ta hapë app-in lokalisht, jo ekran bosh.
   webDir: "dist/client",
-  // NOTE: Live-reload nga Lovable preview është çaktivizuar.
-  // Për zhvillim me live-reload, hiq komentet më poshtë:
-  // server: {
-  //   url: "https://35208567-a06c-46d9-afd6-6845cc48b9c7.lovableproject.com?forceHideBadge=true",
-  //   cleartext: true,
-  // },
+  // Ngarko app-in direkt nga versioni i botuar (SSR funksionon atje).
+  // Kjo e zgjidh problemin "ekran bardh" në Android, sepse build-i lokal
+  // përfshin SSR/hydration që kërkon server, dhe një shell statik bosh
+  // dështon në hidratim.
+  server: {
+    url: "https://austria-fest-kalendar.lovable.app",
+    cleartext: false,
+    androidScheme: "https",
+  },
   plugins: {
     LocalNotifications: {
       smallIcon: "ic_stat_icon_config_sample",
