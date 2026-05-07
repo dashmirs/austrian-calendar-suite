@@ -4,14 +4,16 @@ const config: CapacitorConfig = {
   appId: "at.lovable.kalender",
   appName: "Österreichischer Kalender",
   webDir: "dist/client",
-  // Ngarko app-in direkt nga versioni i botuar (SSR funksionon atje).
-  // Kjo e zgjidh problemin "ekran bardh" në Android, sepse build-i lokal
-  // përfshin SSR/hydration që kërkon server, dhe një shell statik bosh
-  // dështon në hidratim.
+  // Ngarkojmë app-in direkt nga versioni i botuar (SSR funksionon atje).
   server: {
     url: "https://austria-fest-kalendar.lovable.app",
-    cleartext: false,
+    cleartext: true,
     androidScheme: "https",
+    allowNavigation: ["*.lovable.app", "*.lovable.dev"],
+  },
+  android: {
+    allowMixedContent: true,
+    webContentsDebuggingEnabled: true,
   },
   plugins: {
     LocalNotifications: {
