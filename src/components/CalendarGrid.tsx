@@ -61,7 +61,9 @@ export function CalendarGrid({ year, month, selected, onSelect }: Props) {
           const isWeekend = c.date.getDay() === 0; // Sunday = work free
           const isToday = isSameDay(c.date, today);
           const isSelected = isSameDay(c.date, selected);
-          const hasApt = appointments.some((a) => a.date === dateKey);
+          const dayApts = appointments.filter((a) => a.date === dateKey);
+          const hasApt = dayApts.length > 0;
+          const firstApt = dayApts.sort((a, b) => a.time.localeCompare(b.time))[0];
           const names = getNamenForDate(c.date);
 
           const redDay = !!workFreeHoliday || isWeekend;
