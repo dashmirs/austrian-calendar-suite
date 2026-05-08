@@ -15,6 +15,7 @@ export const Route = createFileRoute("/")({
   component: () => (
     <AppProvider>
       <Home />
+      <AlarmOverlay />
     </AppProvider>
   ),
 });
