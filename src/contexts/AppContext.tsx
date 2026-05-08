@@ -66,10 +66,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
       await LocalNotifications.schedule({
         notifications: [{
           id,
-          title: apt.title,
-          body: apt.description || `${apt.date} ${apt.time}`,
+          title: `🔔 ${apt.title}`,
+          body: apt.description || `${apt.date} um ${apt.time}`,
           schedule: { at: fire, allowWhileIdle: true },
           smallIcon: "ic_stat_icon_config_sample",
+          sound: "beep.wav",
+          ongoing: false,
+          autoCancel: true,
         }],
       });
       return id;

@@ -61,7 +61,9 @@ export function CalendarGrid({ year, month, selected, onSelect }: Props) {
           const isWeekend = c.date.getDay() === 0; // Sunday = work free
           const isToday = isSameDay(c.date, today);
           const isSelected = isSameDay(c.date, selected);
-          const hasApt = appointments.some((a) => a.date === dateKey);
+          const dayApts = appointments.filter((a) => a.date === dateKey);
+          const hasApt = dayApts.length > 0;
+          const firstApt = dayApts.sort((a, b) => a.time.localeCompare(b.time))[0];
           const names = getNamenForDate(c.date);
 
           const redDay = !!workFreeHoliday || isWeekend;
@@ -79,17 +81,28 @@ export function CalendarGrid({ year, month, selected, onSelect }: Props) {
                 !workFreeHoliday && isWeekend && c.date.getDay() === 0 && "text-holiday",
                 !workFreeHoliday && c.date.getDay() === 6 && "text-foreground/80",
                 observance && !redDay && "underline decoration-primary/40 decoration-2 underline-offset-2",
+                hasApt && "bg-primary/10 ring-1 ring-primary/40",
               )}
-              title={[...holidays.map((h) => t(h.nameKey)), ...names].join(" · ")}
+              title={[
+                ...holidays.map((h) => t(h.nameKey)),
+                ...names,
+                ...dayApts.map((a) => `${a.time} ${a.title}`),
+              ].join(" · ")}
             >
               <span className="leading-none">{c.date.getDate()}</span>
-              {names.length > 0 && (
+              {hasApt ? (
+                <span className="text-[7px] leading-tight mt-0.5 text-primary font-bold truncate w-full px-0.5">
+                  {firstApt.title}
+                </span>
+              ) : names.length > 0 ? (
                 <span className="text-[8px] leading-none mt-0.5 text-muted-foreground truncate w-full px-0.5">
                   {names[0]}
                 </span>
-              )}
+              ) : null}
               {hasApt && (
-                <span className="absolute bottom-1 w-1 h-1 rounded-full bg-primary" />
+                <span className="absolute top-0.5 right-0.5 min-w-[14px] h-[14px] px-1 rounded-full bg-primary text-primary-foreground text-[8px] font-bold flex items-center justify-center">
+                  {dayApts.length}
+                </span>
               )}
             </button>
           );
