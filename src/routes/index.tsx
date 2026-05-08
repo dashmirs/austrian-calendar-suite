@@ -9,6 +9,7 @@ import { MonthHolidays } from "@/components/MonthHolidays";
 import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
 import { DATE_LOCALE } from "@/lib/i18n";
 import { AppointmentDialog } from "@/components/AppointmentDialog";
+import { AlarmOverlay } from "@/components/AlarmOverlay";
 
 export const Route = createFileRoute("/")({
   component: () => (
